@@ -1,0 +1,146 @@
+Задание 1.
+
+Написать, функцию, которая принимает в качестве аргумента объект и выводит
+ в консоль все ключи и значения только собственных свойств. Данная функция
+ не должна возвращать значение.
+
+Задание 2.
+
+Написать функцию, которая принимает в качестве аргументов строку и объект,
+ а затем проверяет есть ли у переданного объекта свойство с данным именем.
+ Функция должна возвращать true или false.
+
+Задание 3.
+
+Написать функцию, которая создает пустой объект, но без прототипа.
+-------------------------------------------------------------------------------------
+1.
+
+const electricalAppliance = {
+    name: 'teapot',
+    color: 'silver',
+};
+
+function allValues(obj) {
+  for (let key in obj) {
+       console.log(key + ' is ' + obj[key]);
+      }
+}
+allValues(electricalAppliance)
+--------------------------------------------------------------------------------
+2.
+
+const electricalAppliance = {
+    name: 'teapot',
+    color: 'silver',
+};
+
+function objectValues(object, str ) {
+    if (object.hasOwnProperty(str)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+console.log(objectValues(electricalAppliance, 'color'));
+-------------------------------------------------------------------------------
+3.
+function emptyObject(obj) {
+	let empty = {};
+	
+	return obj = empty;
+  }
+
+  let object = emptyObject('obj')
+  console.log((object));
+
+----------------------------------------------------------------------------
+
+Задание 4.
+
+ Реализовать следующее консольное приложение подобно примеру, который
+разбирался в видео. Реализуйте его на прототипах.
+ Определить иерархию электроприборов. Включить некоторые в розетку.
+Посчитать потребляемую мощность. 
+ Таких приборов должно быть, как минимум, два (например, настольная
+лампа и компьютер). Выбрав прибор, подумайте, какими свойствами он
+обладает.
+
+//Задание 4.
+
+function ElectricalAppliance(name) {
+	this.device = 'electrical appliances',
+	this.name = name
+	
+}
+
+ElectricalAppliance.prototype.getEnergyConsumption = function (energy, t, connected) {
+	let plugged = connected;
+	if(connected === 1){
+		plugged = 'On';
+	}else{
+		plugged = 'Off';
+	};
+	
+
+	console.log(`Расход электроэнергии ${this.name} в ${t} час. = ${energy * t}Вт. ${this.name}: ${plugged}`);
+};
+
+function PropertiesOfDevices(name, color) {
+	this.name = name,
+	this.color = color
+}
+
+PropertiesOfDevices.prototype = new ElectricalAppliance();
+
+const teapot = new PropertiesOfDevices ('Teapot', 'silver');
+const computer = new PropertiesOfDevices ('Computer', 'black');
+
+
+console.log(teapot, computer);
+teapot.getEnergyConsumption(1200, 0.1);
+computer.getEnergyConsumption(900, 3, 1);
+
+------------------------------------------------------------------------------
+Задание 5.
+Переписать консольное приложение из предыдущего юнита на классы.
+
+class ElectricalAppliance {
+    constructor(name){
+	this.device = 'electrical appliances',
+	this.name = name
+	
+}
+
+    getEnergyConsumption (energy, t, connected) {
+	let plugged = connected;
+	if(connected === 1){
+		plugged = 'On';
+	}else{
+		plugged = 'Off';
+	};
+	
+
+	console.log(`Расход электроэнергии ${this.name} в ${t} час. = ${energy * t}Вт. ${this.name}: ${plugged}`);
+        }
+}
+
+class PropertiesOfDevices extends ElectricalAppliance {
+        constructor(name, color){
+	super(name);
+	this.color = color
+        }
+}
+
+
+
+const teapot = new PropertiesOfDevices ('Teapot', 'silver');
+const computer = new PropertiesOfDevices ('Computer', 'black');
+
+
+console.log(teapot, computer);
+teapot.getEnergyConsumption(1200, 0.1);
+computer.getEnergyConsumption(900, 3, 1);
+
+
+
